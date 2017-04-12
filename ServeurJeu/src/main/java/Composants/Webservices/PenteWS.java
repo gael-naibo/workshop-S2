@@ -22,6 +22,13 @@ public class PenteWS {
 	public static final int JOUEUR1_DEFAULT_NUM = 0;
 	public static final int JOUEUR2_DEFAULT_NUM = 1;
 	
+	public static int DERNIER_COUP_JOUE_X = 0;
+	public static int DERNIER_COUP_JOUE_Y = 0;
+	
+	public static int JOUEUR_QUI_DOIT_JOUER = 0;
+	public static int NOMBRE_TENAILLE_J_1 = 0;
+	public static int NOMBRE_TENAILLE_J_2 = 0;
+	
 	/**
 	 * Permet de se connecter au jeu de pente. Le serveur créé une partie pour
 	 * le nom du groupe et retourne au joueur son identifiant et son numéro.
@@ -65,12 +72,22 @@ public class PenteWS {
 	 * @param idJoueur
 	 */
 	@RequestMapping(value = "/play/{x}/{y}/{idJoueur}", method = RequestMethod.GET)
-	public HttpStatus play(@PathVariable int x, @PathVariable int y, @PathVariable int idJoueur) {
-
-		if(currentGame.addPion(currentGame.getJoueurById(idJoueur).getNumJoueur() + 1, x, y)){
-			return HttpStatus.OK;
+	public HttpStatus play(@PathVariable int x, @PathVariable int y, @PathVariable String idJoueur) {
+		
+		// Si le joueur n'est pas autorisé -> on renvois une 401
+		if(!(currentGame.getJoueur1().getIdJoueur().equals(idJoueur) || currentGame.getJoueur2().equals(idJoueur))){
+			return HttpStatus.UNAUTHORIZED;
 		}
-		return HttpStatus.NOT_ACCEPTABLE;
+		
+		// Si le pion peux etre placé on renvoi une 200
+		if(currentGame.addPion(currentGame.getJoueurById(idJoueur).getNumJoueur() + 1, x, y)){
+			DERNIER_COUP_JOUE_X = x;
+			DERNIER_COUP_JOUE_Y = y;
+			return HttpStatus.OK;
+		}else{
+			return HttpStatus.NOT_ACCEPTABLE;
+		}
+		
 	}
 
 	/**
@@ -80,7 +97,14 @@ public class PenteWS {
 	 * @param idJoueur
 	 */
 	@RequestMapping(value = "/turn/{idJoueur}", method = RequestMethod.GET)
-	public void turn(@PathVariable int idJoueur) {
-
+	public void turn(@PathVariable String idJoueur) {
+		int numJoueur = 0;
+		if(currentGame.getJoueur1().getIdJoueur().equals(idJoueur)){
+			numJoueur = 1;
+			NOMBRE_TENAILLE_J_1 = currentGame.getNombreTenaille(numJoueur, DERNIER_COUP_JOUE_X, DERNIER_COUP_JOUE_Y);
+		}else{
+			numJoueur = 2;
+			NOMBRE_TENAILLE_J_2 = currentGame.getNombreTenaille(numJoueur, DERNIER_COUP_JOUE_X, DERNIER_COUP_JOUE_Y);
+		}
 	}
 }
