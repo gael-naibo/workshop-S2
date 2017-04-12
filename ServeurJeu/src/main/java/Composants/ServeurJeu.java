@@ -11,7 +11,6 @@ public class ServeurJeu {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ServeurJeu.class, args);
-
 	}
 
 }

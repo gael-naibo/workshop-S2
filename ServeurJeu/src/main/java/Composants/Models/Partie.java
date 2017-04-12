@@ -39,24 +39,15 @@ public class Partie {
 		return this.joueur2;
 	}
 	
-	public boolean addPion(int numJoueur, int x, int y) {
-		int tour = 0;
+	public boolean addPion(int numJoueur, int x, int y, int tour) {
 		
 		if(x < 0 || x > 18 || y < 0 || y > 18){
 			return false;
 		}
 		
-		// retourne le numéro du tour
-		for (int[] is : this.plateau.getCases()) {
-			for (int i : is) {
-				if(i != 1 || i != 2){
-					tour += 1;
-				}
-			}
-		}
 		
 		// Si c'est 1er tour, le joueur doit placer son pion au milieu du plateau
-		if(tour == 0){
+		if(tour == 1){
 			if(x != 9 && y != 9){
 				return false;
 			}
