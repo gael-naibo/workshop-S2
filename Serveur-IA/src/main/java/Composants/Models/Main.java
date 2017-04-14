@@ -63,6 +63,10 @@ public class Main {
 		GameInfo gameinfo = getInfo(URL_TO_CONNECT + "/turn/" + ID_JOUEUR);
 		//System.out.println(gameinfo.getTableau()[0][0]);
 		System.out.println("status : " + gameinfo.getStatus());
+		if(gameinfo.getDetailFinPartie() != null){
+			System.out.println(gameinfo.getDetailFinPartie());
+			System.exit(1);
+		}
 		if (gameinfo.getStatus() == 1) {
 			System.out.println("au tour du robot :");
 			if (gameinfo.getNumTour() == 1) {
