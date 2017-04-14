@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -69,10 +72,26 @@ public class Main {
 				if (gameinfo.getNumTour() == 3) {
 					placer_coup(profondeur, 11);
 				} else {
-					IA_JOUER(gameinfo.getTableau(), profondeur, NUM_JOUEUR);
+					IA_ALEATOIRE(gameinfo.getTableau(), NUM_JOUEUR);
+					//IA_JOUER(gameinfo.getTableau(), profondeur, NUM_JOUEUR);
 				}
 			}
 		}
+	}
+
+	private static void IA_ALEATOIRE(int[][] tableau, int nUM_JOUEUR2) {
+		List<Coordonnee> liste = new ArrayList();
+		for (int i =0; i<19; i++) {
+			for (int j =0; j<19; j++) {
+				if(tableau[i][j] == 0){
+					liste.add(new Coordonnee(i, j));
+				}
+			}
+		}
+		
+		Coordonnee coord = liste.get( new Random().nextInt(liste.size()));
+		placer_coup(coord.getX(), coord.getY());
+		
 	}
 
 	private static GameInfo getInfo(String url) throws MalformedURLException,
