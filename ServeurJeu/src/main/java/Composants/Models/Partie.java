@@ -52,7 +52,7 @@ public class Partie {
 				return false;
 			}
 		}
-		else if(tour == 2) { // Si c'est au 2eme tour du 1er joueur, il doit placer son pion à moins de 3 intersections du milieu
+		else if(tour == 3) { // Si c'est au 2eme tour du 1er joueur, il doit placer son pion à moins de 3 intersections du milieu
 			if(x < 7 || x > 11 || y < 7 || y > 11){
 				return false;
 			}
@@ -66,11 +66,16 @@ public class Partie {
 	public int getNombreTenaille(int numJoueur, int dernier_coup_joue_x, int dernier_coup_joue_y){
 		int numAutreJoueur = (numJoueur == 1) ? 2 : 1;
 		int nombreTenaille = 0;
-		
-		nombreTenaille += getNombreTenailleHorizontale(numJoueur, numAutreJoueur, dernier_coup_joue_x, dernier_coup_joue_y);
-		nombreTenaille += getNombreTenailleVerticale(numJoueur, numAutreJoueur, dernier_coup_joue_x, dernier_coup_joue_y);
-		nombreTenaille += getNombreTenaillesDiagonale(numJoueur, numAutreJoueur, dernier_coup_joue_x, dernier_coup_joue_y);
-		
+		try{
+			nombreTenaille += getNombreTenailleHorizontale(numJoueur, numAutreJoueur, dernier_coup_joue_x, dernier_coup_joue_y);
+			nombreTenaille += getNombreTenailleVerticale(numJoueur, numAutreJoueur, dernier_coup_joue_x, dernier_coup_joue_y);
+			nombreTenaille += getNombreTenaillesDiagonale(numJoueur, numAutreJoueur, dernier_coup_joue_x, dernier_coup_joue_y);
+			
+		}
+		catch(Exception e){
+			System.out.println(e);
+			e.printStackTrace();
+		}
 		return nombreTenaille;
 	}
 	
@@ -155,19 +160,72 @@ public class Partie {
 				_cases[x+2][y-2] = 0;
 				nombreTenailles += 1;
 			}
-		}else if(x < 3 && y > 15){ // pion en bas à gauche
+		}
+		else if(x > 15 && y < 3){ // pion en bas à gauche
 			if(_cases[x-1][y+1] == numAutreJoueur && _cases[x-2][y+2] == numAutreJoueur && _cases[x-3][y+3] == numJoueur){
-				_cases[x-1][y+1] = 0;
-				_cases[x-2][y+2] = 0;
+				_cases[x-1][y-1] = 0;
+				_cases[x-2][y-2] = 0;
 				nombreTenailles += 1;
 			}
-		}else if(x > 15 && y > 15){ // pion en base à droite
+			
+		}
+		else if(x > 15 && y > 15){ // pion en bas à droite
 			if(_cases[x-1][y-1] == numAutreJoueur && _cases[x-2][y-2] == numAutreJoueur && _cases[x-3][y-3] == numJoueur){
 				_cases[x-1][y-1] = 0;
 				_cases[x-2][y-2] = 0;
 				nombreTenailles += 1;
 			}
-		}else{ // pion n'importe où ailleurs sur la plateau
+		}
+		else if(x < 3) {
+			if(_cases[x+1][y-1] == numAutreJoueur && _cases[x+2][y-2] == numAutreJoueur && _cases[x+3][y-3] == numJoueur){
+				_cases[x-1][y-1] = 0;
+				_cases[x-2][y-2] = 0;
+				nombreTenailles += 1;
+			}
+			if(_cases[x+1][y+1] == numAutreJoueur && _cases[x+2][y+2] == numAutreJoueur && _cases[x+3][y+3] == numJoueur){
+				_cases[x-1][y-1] = 0;
+				_cases[x-2][y-2] = 0;
+				nombreTenailles += 1;
+			}
+		}
+		else if(x > 15){
+			if(_cases[x-1][y+1] == numAutreJoueur && _cases[x-2][y+2] == numAutreJoueur && _cases[x-3][y+3] == numJoueur){
+				_cases[x-1][y-1] = 0;
+				_cases[x-2][y-2] = 0;
+				nombreTenailles += 1;
+			}
+			if(_cases[x-1][y-1] == numAutreJoueur && _cases[x-2][y-2] == numAutreJoueur && _cases[x-3][y-3] == numJoueur){
+				_cases[x-1][y-1] = 0;
+				_cases[x-2][y-2] = 0;
+				nombreTenailles += 1;
+			}
+		}
+		else if(y < 3){
+			if(_cases[x-1][y+1] == numAutreJoueur && _cases[x-2][y+2] == numAutreJoueur && _cases[x-3][y+3] == numJoueur){
+				_cases[x-1][y-1] = 0;
+				_cases[x-2][y-2] = 0;
+				nombreTenailles += 1;
+			}
+			if(_cases[x+1][y+1] == numAutreJoueur && _cases[x+2][y+2] == numAutreJoueur && _cases[x+3][y+3] == numJoueur){
+				_cases[x-1][y-1] = 0;
+				_cases[x-2][y-2] = 0;
+				nombreTenailles += 1;
+			}
+		}
+		else if(y > 15){
+			if(_cases[x+1][y-1] == numAutreJoueur && _cases[x+2][y-2] == numAutreJoueur && _cases[x+3][y-3] == numJoueur){
+				_cases[x-1][y-1] = 0;
+				_cases[x-2][y-2] = 0;
+				nombreTenailles += 1;
+			}
+			if(_cases[x-1][y-1] == numAutreJoueur && _cases[x-2][y-2] == numAutreJoueur && _cases[x-3][y-3] == numJoueur){
+				_cases[x-1][y-1] = 0;
+				_cases[x-2][y-2] = 0;
+				nombreTenailles += 1;
+			}
+		}
+		else{ // pion n'importe où ailleurs sur la plateau
+
 			if(_cases[x+1][y+1] == numAutreJoueur && _cases[x+2][y+2] == numAutreJoueur && _cases[x+3][y+3] == numJoueur){
 				_cases[x+1][y+1] = 0;
 				_cases[x+2][y+2] = 0;
@@ -188,7 +246,7 @@ public class Partie {
 				_cases[x-2][y-2] = 0;
 				nombreTenailles += 1;
 			}
-		}
+	}
 		
 		return nombreTenailles;
 	}

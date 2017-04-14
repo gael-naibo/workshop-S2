@@ -17,8 +17,8 @@ import Composants.Models.Plateau;
 public class PenteWS {
 
 	Partie currentGame;
-	public static final int JOUEUR1_DEFAULT_NUM = 0;
-	public static final int JOUEUR2_DEFAULT_NUM = 1;
+	public static final int JOUEUR1_DEFAULT_NUM = 1;
+	public static final int JOUEUR2_DEFAULT_NUM = 2;
 	
 	public static int DERNIER_COUP_JOUE_X = 0;
 	public static int DERNIER_COUP_JOUE_Y = 0;
@@ -51,7 +51,9 @@ public class PenteWS {
 	@RequestMapping(value = "/connect/{joueurName}", method = RequestMethod.GET)
 	public ResponseEntity<Joueur> connecter(@PathVariable String joueurName) {
 		Joueur joueur = null;
-		TOUR_DU_JOUEUR = (int) (1 + Math.random() * (2 - 1 + 1));
+		if(TOUR_DU_JOUEUR == 0 ){
+			TOUR_DU_JOUEUR = (int) (1 + Math.random() * (2 - 1 + 1));
+		}
 		if(currentGame == null){
 			joueur = new Joueur(joueurName, JOUEUR1_DEFAULT_NUM);
 			Plateau plateau = new Plateau();			
@@ -83,7 +85,7 @@ public class PenteWS {
 		}
 		
 		// Si le pion peux etre placé on renvoi une 200
-		if(currentGame.addPion(currentGame.getJoueurById(idJoueur).getNumJoueur() + 1, x, y, NUM_TOUR)){
+		if(currentGame.addPion(currentGame.getJoueurById(idJoueur).getNumJoueur(), x, y, NUM_TOUR)){
 			DERNIER_COUP_JOUE_X = x;
 			DERNIER_COUP_JOUE_Y = y;
 			TOUR_DU_JOUEUR = (currentGame.getJoueur1().getIdJoueur().equals(idJoueur)) ? 2 : 1;
@@ -133,7 +135,18 @@ public class PenteWS {
 			}
 			
 			if(NOMBRE_TENAILLE_J_1 == 5 || NOMBRE_TENAILLE_J_2 == 5){
-				
+				String gagnant = (NOMBRE_TENAILLE_J_1 == 5) ? "JOUEUR 1 A GAGNE" : "JOUEUR 2 A GAGNE";
+				GameInfo gameInfo = new GameInfo(
+						0,
+						currentGame.getPlateau().getCases(), 
+						NOMBRE_TENAILLE_J_1, 
+						NOMBRE_TENAILLE_J_2, 
+						DERNIER_COUP_JOUE_X, 
+						DERNIER_COUP_JOUE_Y, 
+						false, 
+						true, 
+						gagnant, 
+						NUM_TOUR);
 			}
 			
 			GameInfo gameInfo = new GameInfo(status, 
