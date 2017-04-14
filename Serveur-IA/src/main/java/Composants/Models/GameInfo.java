@@ -46,6 +46,8 @@ public class GameInfo {
 	public void setTableau(int[][] tableau) {
 		this.tableau = tableau;
 	}
+	
+	
 	public int getNbTenaillesJ1() {
 		return nbTenaillesJ1;
 	}

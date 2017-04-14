@@ -63,7 +63,7 @@ public class Main {
 		GameInfo gameinfo = getInfo(URL_TO_CONNECT + "/turn/" + ID_JOUEUR);
 		//System.out.println(gameinfo.getTableau()[0][0]);
 		System.out.println("status : " + gameinfo.getStatus());
-		if(gameinfo.getDetailFinPartie() != null){
+		if(gameinfo.isFinPartie()){
 			System.out.println(gameinfo.getDetailFinPartie());
 			System.exit(1);
 		}

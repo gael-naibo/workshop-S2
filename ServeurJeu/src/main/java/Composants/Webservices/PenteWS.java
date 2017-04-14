@@ -134,8 +134,9 @@ public class PenteWS {
 				NOMBRE_TENAILLE_J_2 += currentGame.getNombreTenaille(numJoueur, DERNIER_COUP_JOUE_X, DERNIER_COUP_JOUE_Y);
 			}
 			
-			if(NOMBRE_TENAILLE_J_1 == 5 || NOMBRE_TENAILLE_J_2 == 5){
-				String gagnant = (NOMBRE_TENAILLE_J_1 == 5) ? "JOUEUR 1 A GAGNE" : "JOUEUR 2 A GAGNE";
+			if(NOMBRE_TENAILLE_J_1 >= 5 || NOMBRE_TENAILLE_J_2 >= 5){
+				System.out.println("un des joueur a gagné !!!");
+				String gagnant = (NOMBRE_TENAILLE_J_1 >= 5) ? "JOUEUR 1 A GAGNE" : "JOUEUR 2 A GAGNE";
 				GameInfo gameInfo = new GameInfo(
 						0,
 						currentGame.getPlateau().getCases(), 
@@ -147,6 +148,7 @@ public class PenteWS {
 						true, 
 						gagnant, 
 						NUM_TOUR);
+				return ResponseEntity.status(HttpStatus.OK).body(gameInfo);
 			}
 			
 			GameInfo gameInfo = new GameInfo(status, 
