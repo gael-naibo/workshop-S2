@@ -70,7 +70,7 @@ public class Main {
 			} else {
 				int profondeur = 2;
 				if (gameinfo.getNumTour() == 3) {
-					placer_coup(profondeur, 11);
+					placer_coup(9, 11);
 				} else {
 					IA_ALEATOIRE(gameinfo.getTableau(), NUM_JOUEUR);
 					//IA_JOUER(gameinfo.getTableau(), profondeur, NUM_JOUEUR);
