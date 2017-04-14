@@ -128,10 +128,10 @@ public class PenteWS {
 			// GET NB TENAILLES
 			if(currentGame.getJoueur1().getIdJoueur().equals(idJoueur)){
 				numJoueur = 1;
-				NOMBRE_TENAILLE_J_1 = currentGame.getNombreTenaille(numJoueur, DERNIER_COUP_JOUE_X, DERNIER_COUP_JOUE_Y);
+				NOMBRE_TENAILLE_J_1 += currentGame.getNombreTenaille(numJoueur, DERNIER_COUP_JOUE_X, DERNIER_COUP_JOUE_Y);
 			}else{
 				numJoueur = 2;
-				NOMBRE_TENAILLE_J_2 = currentGame.getNombreTenaille(numJoueur, DERNIER_COUP_JOUE_X, DERNIER_COUP_JOUE_Y);
+				NOMBRE_TENAILLE_J_2 += currentGame.getNombreTenaille(numJoueur, DERNIER_COUP_JOUE_X, DERNIER_COUP_JOUE_Y);
 			}
 			
 			if(NOMBRE_TENAILLE_J_1 == 5 || NOMBRE_TENAILLE_J_2 == 5){

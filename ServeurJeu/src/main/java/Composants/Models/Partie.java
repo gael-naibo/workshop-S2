@@ -202,13 +202,13 @@ public class Partie {
 		}
 		else if(y < 3){
 			if(_cases[x-1][y+1] == numAutreJoueur && _cases[x-2][y+2] == numAutreJoueur && _cases[x-3][y+3] == numJoueur){
-				_cases[x-1][y-1] = 0;
-				_cases[x-2][y-2] = 0;
+				_cases[x-1][y+1] = 0;
+				_cases[x-2][y+2] = 0;
 				nombreTenailles += 1;
 			}
 			if(_cases[x+1][y+1] == numAutreJoueur && _cases[x+2][y+2] == numAutreJoueur && _cases[x+3][y+3] == numJoueur){
-				_cases[x-1][y-1] = 0;
-				_cases[x-2][y-2] = 0;
+				_cases[x-1][y+1] = 0;
+				_cases[x-2][y+2] = 0;
 				nombreTenailles += 1;
 			}
 		}
